@@ -1,3 +1,6 @@
+# To extract GitHub project board data using GraphQL in Python, you can use the requests library to send a GraphQL query to the GitHub API and retrieve the data.
+
+
 import requests
 
 # GitHub API endpoint for GraphQL
@@ -45,3 +48,8 @@ else:
     # Handle errors
     print("Query failed with status code:", response.status_code)
     print("Error message:", response.json()["errors"])
+
+
+# In the example above, you need to replace <YOUR_ACCESS_TOKEN> with your personal access token, <OWNER> with the owner of the repository, <REPO> with the name of the repository, and <PROJECT_NUMBER> with the number of the project board you want to retrieve data for.
+
+# Once you have executed the code, the data variable will contain the results of the query, which you can use as needed.
