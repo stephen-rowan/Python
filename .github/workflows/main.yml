@@ -18,7 +18,7 @@ jobs:
         sudo apt-get install -y csvkit
 
         # Process the CSV file
-        csvcut -c 1,2 path/to/file.csv > processed.csv
+        csvcut -c 1,2 /file.csv > processed.csv
 
     - name: Commit processed file
       uses: stefanzweifel/git-auto-commit-action@v4
