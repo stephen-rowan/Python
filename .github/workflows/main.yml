@@ -1,8 +1,7 @@
 name: Process CSV file
 
 on:
-  push:
-    branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   process_csv:
@@ -27,3 +26,4 @@ jobs:
         commit_message: "Processed CSV file"
         push_to: origin
         files: processed.csv
+
