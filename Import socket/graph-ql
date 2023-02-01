@@ -1,0 +1,47 @@
+import requests
+
+# GitHub API endpoint for GraphQL
+url = "https://api.github.com/graphql"
+
+# Personal access token for authentication
+headers = {"Authorization": "bearer <YOUR_ACCESS_TOKEN>"}
+
+# GraphQL query to retrieve the columns and cards of a project board
+query = """
+query {
+  repository(owner: "<OWNER>", name: "<REPO>") {
+    project(number: <PROJECT_NUMBER>) {
+      columns(first: 100) {
+        nodes {
+          name
+          cards(first: 100) {
+            nodes {
+              content {
+                __typename
+                ... on Issue {
+                  title
+                  state
+                  number
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+# Send the query to the GitHub API
+response = requests.post(url, json={"query": query}, headers=headers)
+
+# Check if the query was successful
+if response.status_code == 200:
+    data = response.json()["data"]
+    # Use the data as needed
+    print(data)
+else:
+    # Handle errors
+    print("Query failed with status code:", response.status_code)
+    print("Error message:", response.json()["errors"])
