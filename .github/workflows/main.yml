@@ -8,24 +8,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Process CSV file
+    - name: Install dependencies
       run: |
-        # Install any dependencies required for processing the CSV file
         sudo apt-get update
         sudo apt-get install -y csvkit
 
-        # Process the CSV file
-        csvcut -c 1,2 file.csv > processed.csv
+    - name: Process CSV file
+      run: csvcut -c 1,2 file.csv > processed.csv
 
     - name: Commit processed file
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Processed CSV file"
-        push_to: origin
-        files: processed.csv
+      run: |
+        git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git repo
+        cd repo
+        git config user.email "github-actions@example.com"
+        git config user.name "GitHub Actions"
+        git add processed.csv
+        git commit -m "Processed CSV file"
+        git push origin HEAD:master
+
 
